@@ -68,7 +68,7 @@ public:
    * 2. Try to avoid using the delay() function. NEVER use delays longer than 10 milliseconds.
    *    Instead, use a timer check as shown here.
    */
-  void loop(void *parameters)
+  void loop()
   {
     uint8_t success;
     uint8_t uid[] = {0, 0, 0, 0, 0, 0, 0}; // Buffer to store the returned UID
@@ -77,9 +77,9 @@ public:
     // Wait for an ISO14443A type cards (Mifare, etc.).  When one is found
     // 'uid' will be populated with the UID, and uidLength will indicate
     // if the uid is 4 bytes (Mifare Classic) or 7 bytes (Mifare Ultralight)
-    Serial.println("Expecting card...");
-    success = nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength);
-    Serial.println(success);
+    // Serial.println("Expecting card...");
+    success = nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength, 1000);
+    // Serial.println(success);
     if (success)
     {
       // Display some basic information about the card
