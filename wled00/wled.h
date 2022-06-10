@@ -695,6 +695,7 @@ public:
   void setup();
 
   void loop();
+  void async();
   void reset();
 
   void beginStrip();

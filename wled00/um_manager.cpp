@@ -5,6 +5,7 @@
 
 //Usermod Manager internals
 void UsermodManager::loop()              { for (byte i = 0; i < numMods; i++) ums[i]->loop();  }
+void UsermodManager::async()              { for (byte i = 0; i < numMods; i++) ums[i]->async();  }
 void UsermodManager::handleOverlayDraw() { for (byte i = 0; i < numMods; i++) ums[i]->handleOverlayDraw(); }
 bool UsermodManager::handleButton(uint8_t b) { 
   bool overrideIO = false;

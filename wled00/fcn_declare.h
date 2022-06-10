@@ -227,6 +227,7 @@ uint8_t extractModeName(uint8_t mode, const char *src, char *dest, uint8_t maxLe
 class Usermod {
   public:
     virtual void loop() {}
+    virtual void async() {}
     virtual void handleOverlayDraw() {}
     virtual bool handleButton(uint8_t b) { return false; }
     virtual void setup() {}
@@ -248,6 +249,7 @@ class UsermodManager {
 
   public:
     void loop();
+    void async();
     void handleOverlayDraw();
     bool handleButton(uint8_t b);
     void setup();

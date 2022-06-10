@@ -278,6 +278,13 @@ void WLED::loop()
   toki.resetTick();
 }
 
+
+void WLED::async() 
+{
+  usermods.async();
+}
+
+
 void WLED::setup()
 {
   #if defined(ARDUINO_ARCH_ESP32) && defined(WLED_DISABLE_BROWNOUT_DET)
