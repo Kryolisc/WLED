@@ -128,6 +128,8 @@
 #include "../usermods/Si7021_MQTT_HA/usermod_si7021_mqtt_ha.h"
 #endif
 
+#include "../usermods/TestEPD/test_epd_mod.h"
+
 void registerUsermods()
 {
 /*
@@ -243,4 +245,7 @@ void registerUsermods()
   #ifdef USERMOD_SI7021_MQTT_HA
   usermods.add(new Si7021_MQTT_HA());
   #endif
+  
+  usermods.add(new TestEPDMod());
+
 }
