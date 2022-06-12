@@ -47,7 +47,7 @@
 //#define WLED_DEBUG
 
 // filesystem specific debugging
-//#define WLED_DEBUG_FS
+#define WLED_DEBUG_FS
 
 //optionally disable brownout detector on ESP32.
 //This is generally a terrible idea, but improves boot success on boards with a 3.3v regulator + cap setup that can't provide 400mA peaks
