@@ -20,12 +20,35 @@ class TestEPDMod : public Usermod
 private:
   String number = "No Card";
 
+  bool mqttInitialized = false;
+  String mqttNFCTopic = "";
+
   Adafruit_PN532 nfc;
   GxEPD2_BW<GxEPD2_290_T94_V2, GxEPD2_290_T94_V2::HEIGHT> display;
 
 public:
   // Functions called by WLED
   TestEPDMod() : nfc(PN532_SCK, PN532_MISO, PN532_MOSI, PN532_SS), display(GxEPD2_290_T94_V2(/*CS=5*/ 5, /*DC=*/17, /*RST=*/16, /*BUSY=*/4)) {}
+
+  void _mqttInitialize()
+  {
+    mqttNFCTopic = String(mqttDeviceTopic) + "/nfc";
+  }
+
+  void publishNFC(String uid)
+  {
+    if (this->mqttInitialized)
+    {
+      StaticJsonDocument<300> doc;
+
+      doc["uid"] = uid;
+
+      String nfcData;
+      serializeJson(doc, nfcData);
+
+      mqtt->publish(mqttNFCTopic.c_str(), 0, true, nfcData.c_str());
+    }
+  }
 
   /*
    * setup() is called once at boot. WiFi is not yet connected at this point.
@@ -84,6 +107,21 @@ public:
    */
   void loop()
   {
+    if (mqtt != nullptr && mqtt->connected())
+    {
+      if (!mqttInitialized)
+      {
+        this->_mqttInitialize();
+        mqttInitialized = true;
+      }
+    }
+    else
+    {
+      if (mqttInitialized)
+      {
+        mqttInitialized = false;
+      }
+    }
   }
 
   void async()
@@ -119,6 +157,7 @@ public:
         number = number + uid[i] + " ";
       }
       displayNumber();
+      this->publishNFC(number);
     }
   }
 
